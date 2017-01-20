@@ -2,38 +2,9 @@
 <html>
     <head>
         <title>Pig Latin</title>
+        <script src="piglatin.js"></script>
     </head>
     <body>
-        
-        <script type="text/javascript">
-        
-            var sentence = prompt("Enter a Sentence to translate it to Pig Latin");
-            
-            var words = sentence.split(" ");
-            
-            var translatedWords = [];
-            
-            for(var i = 0; i < words.length; i++){
-                word = words[i];
-                if(word.indexOf("a", "e", "i", "o", "u") != 0 && word.indexOf("a", "e", "i", "o", "u") != 1){
-                    var twoConsP1 = word.substr(2);
-                    var twoConsP2 = word.substr(0, 2);
-                    var twoCons = twoConsP1 + twoConsP2 + "ay";
-                    translatedWords.push(twoCons);
-                }else if(word.indexOf("a", "e", "i", "o", "u") != 0 && word.indexOf("a", "e", "i", "o", "u") == 1){
-                    var oneConsP1 = word.substr(1);
-                    var oneConsP2 = word.substr(0, 1);
-                    var oneCons = oneConsP1 + oneConsP2 + "ay";
-                    translatedWords.push(oneCons);
-                }else{
-                    var vowelStart = word+"way";
-                    translatedWords.push(vowelStart);
-                }
-            };
-            
-            document.write (translatedWords);
-        
-        </script>
-        
+                
     </body>
 </html>
