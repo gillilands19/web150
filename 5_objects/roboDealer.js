@@ -30,7 +30,7 @@ function deal(){
         cardID.push(cardHolders[i].id); //pushes the id of each card div to cardID array
         document.getElementById(cardID[i]).innerHTML = "<div style='margin:0 auto; margin-top:70px;'><strong style='margin-top:100px;'>" + randomCard[i].value + '<br \> ' + 'of' + '<br \>' + randomCard[i].suit + '</strong></div>'; 
     }
-
+    
 }
 
 //Creates the deck of 52 cards by adding new card Objects to 'deck' array
@@ -44,4 +44,3 @@ for (s = 0; s < suits.length; s++){
     }
 }
 
-console.log(deck);    
