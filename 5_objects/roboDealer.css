@@ -1,0 +1,42 @@
+html{
+    background-color: #cccccc;
+}
+
+body{
+    width:100%;
+    text-align: center;
+}
+
+.site-wrapper{
+    width: 75%;
+    background-color: ghostwhite;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+}
+
+.hand-wrapper{
+    
+    border: solid 3px #000000;
+    height: auto;
+}
+
+.card{
+    background-color: white;
+    width: 15%;
+    height: 200px;
+    display:flex;
+    float: left;
+    margin: 18.9px;
+    border: 1px solid #000000;
+}
+
+.clearfix{
+    clear:both;
+}
+
+#deal-btn{
+    margin-top: 30px;
+    width: 150px;
+    height: 35px;
+}
