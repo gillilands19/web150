@@ -72,7 +72,7 @@ For phishing scams by phone, fax or mail, call 1-800-366-4484.
                 //add forms to Answers Div
                 var addForms = `Form ${x+1}: ${formsResult[x]} <br><br>`;
                 $('#answers').append(addForms);
-                var addLink = `<a href="${urlsResult[x]}">http://${urlsResult[x]}</a>`;
+                var addLink = `<a href="http://${urlsResult[x]}">http://${urlsResult[x]}</a>`;
                 contentDiv.innerHTML = contentDiv.innerHTML.replace(urlsResult[x], addLink);
                 }
         });
