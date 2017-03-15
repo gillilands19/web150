@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Weather</title> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div>
+            <form action="#" method="post" name="get_weather" id="weather_form">
+                <input type="text" name="city_field" value="" id="city" placeholder="City, St">
+                <button type="submit">Get Weather</button>
+            </form>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div id="weather_results">
+            
+        </div>
+        <script type="text/javascript">
+            
+            var apiKey = 'd95454f2da272c6339c6aa87140e4b17';
+            
+            function kelvinToF(value) {
+                var fahrenheit = (((Number(value) - 273.15)*9)/5) + 32;
+                return fahrenheit.toFixed(2) + ' Fahrenheit';
+                }
+            
+            
+            $('#weather_form').submit(function(e){
+                $('#weather_results').empty();
+                e.preventDefault();
+                var city = $("#city").val();
+                var cityRegex = /.+\s.{2}/gi;
+                if (!isNaN(city) == true){
+                    $('#weather_results').append('<strong style="color:red;">Please Enter a US City and State</strong>');
+                } else if(cityRegex.test(city) == false){
+                    $('#weather_results').append('<strong style="color:red;">Please Enter A US City Followed by Two Letter State</strong>');
+                } else {
+                
+                //submit the form using AJAX
+                var request = $.ajax({
+                url: 'http://api.openweathermap.org/data/2.5/forecast?q={' + city + '},{USA}&APPID=' + apiKey, //Make link to send api request
+                type: 'POST', // specifies the POST method
+                data: $(this).serialize(), //it will serialize the form data
+                dataType: 'json' //requests json from Open Weather Map to be returned.  
+                })
+                
+                //when request is returned access and process json data
+                .done(function(){
+                var i = 0;
+                var dateList = []; var minTempList = []; var maxTempList = []; var humidList = []; var weatherDesc = []; var iconList = [];
+                var accessData = request.responseJSON;
+                    
+                //loop through returned data to push each required data set to new arrays    
+                for(i; i < accessData.list.length; i += 8){
+                    var datetxt = new Date(accessData.list[i].dt_txt);
+                    dateList.push(datetxt);
+                    var lowTemp = kelvinToF(accessData.list[i].main.temp_min);
+                    minTempList.push(lowTemp);
+                    var highTemp = kelvinToF(accessData.list[i].main.temp_max);
+                    maxTempList.push(highTemp);
+                    var humid = accessData.list[i].main.humidity;
+                    humidList.push(humid + '%');
+                    var desc = accessData.list[i].weather[0].description;
+                    weatherDesc.push(desc);
+                    var icon = accessData.list[i].weather[0].icon;
+                    iconList.push(icon);
+                }
+                var fiveDayForecast = [];
+                console.log(accessData);    
+                //create and append heading programatically    
+                var resultsHeading = `<strong>5 Day Forecast for ${city}</strong><br><br>`;
+                $('#weather_results').append(resultsHeading);
+                
+                //loop through data arrays to create five Day forecast
+                for(var x = 0; x < 5; x++){
+                 var data = `Day: ${dateList[x]}<br>
+                            <img src="http://openweathermap.org/img/w/${iconList[x]}.png"><br>
+                            ${weatherDesc[x]}<br>
+                            Max Temp: ${maxTempList[x]}<br>
+                            Min Temp: ${minTempList[x]}<br>
+                            Humidity: ${humidList[x]}<br><br>`;
+                
+                //push each set to array    
+                fiveDayForecast.push(data);
+                
+                //insert five day forecast into results div
+                $('#weather_results').append(fiveDayForecast[x]);
+                        }
+                })
+                //on failure to submit form alert box will display with error message
+                .fail(function(){
+                alert('Form Submission Failed!');
+                });
+                }
+            });
+            
+        </script>
+    </body>
+</html>
