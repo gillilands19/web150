@@ -19,23 +19,27 @@
         </div>
         <script type="text/javascript">
             
+            //open weather map API key
             var apiKey = 'd95454f2da272c6339c6aa87140e4b17';
             
+            //Kelvin to Fahrenheit conversion
             function kelvinToF(value) {
                 var fahrenheit = (((Number(value) - 273.15)*9)/5) + 32;
                 return fahrenheit.toFixed(2) + ' Fahrenheit';
                 }
             
-            
+            //When form is submitted prevent default submission, validate, request data, process data, add data to results div 
             $('#weather_form').submit(function(e){
                 $('#weather_results').empty();
                 e.preventDefault();
                 var city = $("#city").val();
-                var cityRegex = /.+\s.{2}/gi;
+                var cityRegex = /.+,\s.{2}/gi;
+                //Make sure form is not a number
                 if (!isNaN(city) == true){
                     $('#weather_results').append('<strong style="color:red;">Please Enter a US City and State</strong>');
+                //Make sure form entry is correct format    
                 } else if(cityRegex.test(city) == false){
-                    $('#weather_results').append('<strong style="color:red;">Please Enter A US City Followed by Two Letter State</strong>');
+                    $('#weather_results').append('<strong style="color:red;">Please Enter A US City Followed by a Comma and Two Letter State</strong>');
                 } else {
                 
                 //submit the form using AJAX
@@ -49,7 +53,9 @@
                 //when request is returned access and process json data
                 .done(function(){
                 var i = 0;
+                //declare arrays for required data
                 var dateList = []; var minTempList = []; var maxTempList = []; var humidList = []; var weatherDesc = []; var iconList = [];
+                
                 var accessData = request.responseJSON;
                     
                 //loop through returned data to push each required data set to new arrays    
@@ -67,8 +73,9 @@
                     var icon = accessData.list[i].weather[0].icon;
                     iconList.push(icon);
                 }
+                    
                 var fiveDayForecast = [];
-                console.log(accessData);    
+                    
                 //create and append heading programatically    
                 var resultsHeading = `<strong>5 Day Forecast for ${city}</strong><br><br>`;
                 $('#weather_results').append(resultsHeading);
