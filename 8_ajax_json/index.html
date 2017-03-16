@@ -33,7 +33,7 @@
                 $('#weather_results').empty();
                 e.preventDefault();
                 var city = $("#city").val();
-                var cityRegex = /.+,\s.{2}/gi;
+                var cityRegex = /[a-zA-Z]+,\s[a-zA-Z]{2}/gi;
                 //Make sure form is not a number
                 if (!isNaN(city) == true){
                     $('#weather_results').append('<strong style="color:red;">Please Enter a US City and State</strong>');
@@ -95,6 +95,7 @@
                 //insert five day forecast into results div
                 $('#weather_results').append(fiveDayForecast[x]);
                         }
+                $('#weather_form')[0].reset();
                 })
                 //on failure to submit form alert box will display with error message
                 .fail(function(){
